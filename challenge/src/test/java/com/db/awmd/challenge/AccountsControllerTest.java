@@ -1,6 +1,7 @@
 package com.db.awmd.challenge;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -15,19 +16,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@WebAppConfiguration
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@WebAppConfiguration
 public class AccountsControllerTest {
 
   private MockMvc mockMvc;
-
+  
+  @Autowired
+  private TestRestTemplate restTemplate;
+  
   @Autowired
   private AccountsService accountsService;
 
@@ -42,6 +47,8 @@ public class AccountsControllerTest {
     accountsService.getAccountsRepository().clearAccounts();
   }
 
+ 
+  
   @Test
   public void createAccount() throws Exception {
     this.mockMvc.perform(post("/v1/accounts").contentType(MediaType.APPLICATION_JSON)
@@ -51,7 +58,16 @@ public class AccountsControllerTest {
     assertThat(account.getAccountId()).isEqualTo("Id-123");
     assertThat(account.getBalance()).isEqualByComparingTo("1000");
   }
-
+  
+  @Test
+  public void getAccountUsingRestTemplate() throws Exception {
+	  String actualresponse = restTemplate.getForObject("/v1/accounts/", String.class);
+	  //JSONAssert.assertEquals("Dev applicationTest", actualresponse, false);
+	  //Above statement will be used when the response type is JSON type.
+	  
+	  assertEquals("Dev applicationTest", actualresponse);
+  }
+  
   @Test
   public void createDuplicateAccount() throws Exception {
     this.mockMvc.perform(post("/v1/accounts").contentType(MediaType.APPLICATION_JSON)
@@ -101,4 +117,6 @@ public class AccountsControllerTest {
       .andExpect(
         content().string("{\"accountId\":\"" + uniqueAccountId + "\",\"balance\":123.45}"));
   }
+  
+ 
 }

@@ -7,8 +7,11 @@ import com.db.awmd.challenge.domain.Account;
 import com.db.awmd.challenge.exception.DuplicateAccountIdException;
 import com.db.awmd.challenge.service.AccountsService;
 import java.math.BigDecimal;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,4 +46,13 @@ public class AccountsServiceTest {
     }
 
   }
+  
+ /* 
+   @Test
+   public void whenUserIdIsProvided_thenRetrievedNameIsCorrect() {
+      Mockito.when(accountsService.getAccount("Id-123")).thenReturn(new Account());
+      Account testName = accountsService.getAccount("Id-123");
+      Assert.assertEquals("Mock Product Name", testName);
+   }
+   */
 }
