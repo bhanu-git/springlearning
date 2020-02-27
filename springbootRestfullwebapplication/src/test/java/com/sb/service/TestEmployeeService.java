@@ -21,8 +21,8 @@ import org.mockito.MockitoAnnotations;
 import com.sb.dao.EmployeeRepo;
 import com.sb.model.Employee;
 import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;;
+@RunWith(SpringJUnit4ClassRunner.class)
 public class TestEmployeeService {
 
 	@InjectMocks
