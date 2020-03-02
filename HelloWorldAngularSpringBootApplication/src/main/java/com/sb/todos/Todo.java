@@ -2,11 +2,24 @@ package com.sb.todos;
 
 import java.util.Date;
 
-public class Todo {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-	private int id;
-	private String name;
+
+@Entity
+public class Todo {
+	
+	@Id
+	@GeneratedValue
+	private Integer id;
+	
+	@Column(name="username")
+	private String name; //name means Username.
+	@Column(name = "target_date")
 	private Date targetData;
+	
 	public Todo() {
 		
 	}
@@ -16,7 +29,7 @@ public class Todo {
 		this.name = name;
 		this.targetData = date;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public void setName(String name) {
@@ -26,7 +39,7 @@ public class Todo {
 		this.targetData = date;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	@Override
